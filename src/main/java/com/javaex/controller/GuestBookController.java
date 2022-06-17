@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/guestbook")
 public class GuestBookController {
 	
+	/***************************************게스트북***************************************/
+	// 게스트북 목록
 	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list() {
 		System.out.println("GuestBookController > list()");
@@ -15,6 +17,8 @@ public class GuestBookController {
 		return "guestbook/addList";
 	}
 	
+	
+	// 게스트북 삭제 폼
 	@RequestMapping(value = "/deleteform", method = {RequestMethod.GET, RequestMethod.POST})
 	public String deleteForm() {
 		System.out.println("GuestBookController > deleteForm()");
