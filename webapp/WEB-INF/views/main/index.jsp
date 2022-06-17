@@ -66,9 +66,8 @@
 		<!-- //container -->
 		
 		
-		<div id="footer">
-			Copyright ⓒ 2022 김준호. All right reserved
-		</div>
+		<!-- footer -->
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 
 	</div>

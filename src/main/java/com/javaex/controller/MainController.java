@@ -21,21 +21,5 @@ public class MainController {
 		
 		return "main/index";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "/test", method = {RequestMethod.GET, RequestMethod.POST})
-	public String test() {
-		System.out.println("MainController > test()");
-		
-		return "test";
-	}
 
 }
