@@ -44,3 +44,21 @@ create sequence seq_board_no
 increment by 1
 start with 1
 nocache;
+
+
+
+
+-- GuestBook Setting
+select *
+from guestbook;
+
+select no
+        ,name
+        ,password
+        ,content
+        ,to_char(reg_date, 'yyyy-mm-dd hh24:mi:ss') day
+from guestbook;
+
+insert into guestbook
+values (seq_guestbook_no, name, password, content, sysdate)
+
