@@ -22,5 +22,13 @@ public class UserDao {
 		// return sqlSession.selectOne("User.login", userVo);
 		return authUser;
 	}
+	
+	public UserVo getUser(int no) {
+		return sqlSession.selectOne("User.getUser", no);
+	}
+	
+	public int modify(UserVo userVo) {
+		return sqlSession.update("User.modify", userVo);
+	}
 
 }

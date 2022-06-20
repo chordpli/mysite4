@@ -22,5 +22,15 @@ public class UserService {
 		return userDao.login(userVo);
 		
 	}
+	
+	public UserVo getUser(int no) {
+		System.out.println("UserService > getUser()");
+		return userDao.getUser(no);
+	}
+	
+	public int modify(UserVo userVo) {
+		System.out.println("UserService > modify()");
+		return userDao.modify(userVo);
+	}
 
 }

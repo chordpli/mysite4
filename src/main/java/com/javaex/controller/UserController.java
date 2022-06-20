@@ -1,9 +1,11 @@
 package com.javaex.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +50,7 @@ public class UserController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:/mysite4/main";
+		return "redirect:../main";
 	}
 	
 	
@@ -88,10 +90,30 @@ public class UserController {
 	/***************************************수정***************************************/
 	// 수정 폼
 	@RequestMapping(value = "/modifyform", method = {RequestMethod.GET, RequestMethod.POST})
-	public String modifyForm() {
+	public String modifyForm(HttpServletRequest req) {
 		System.out.println("UserController > modifyForm()");
 		
+		HttpSession session = req.getSession();
+		UserVo authUser =  (UserVo) session.getAttribute("authUser");
+		
+		UserVo user = userService.getUser(authUser.getNo());
+		
+		session.setAttribute("authUser", user);
+		
 		return "user/modifyForm";
+	}
+	
+	
+	@RequestMapping(value = "/modify", method = { RequestMethod.GET, RequestMethod.POST})
+	public String modify(@ModelAttribute UserVo authUser, HttpServletRequest req) {
+		System.out.println("UserController > modify()");
+		HttpSession session = req.getSession();
+		
+		userService.modify(authUser);
+		session.setAttribute("authUser", authUser);
+		
+		
+		return "redirect:../main";
 	}
 
 }
