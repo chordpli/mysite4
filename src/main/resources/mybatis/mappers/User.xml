@@ -3,6 +3,36 @@
 
 <mapper namespace="User">
 	
-	<!--쿼리문 작성 --> 
+	<insert id="join" parameterType = "com.javaex.vo.UserVo">
+		<![CDATA[
+			insert into users
+			values (seq_users_no.nextval, #{id}, #{password}, #{name}, #{gender})
+		]]>
+	
+	</insert>
+	
+	<select id="login" resultType = "com.javaex.vo.UserVo">
+		<![CDATA[
+			select no
+					,name
+			from users
+			where id = #{id}
+			and password = #{password}
+		
+		]]>
+	</select>
+	
+	<select id="getUser" parameterType = "com.javaex.vo.UserVo" resultType ="com.javaex.vo.UserVo">
+		<![CDATA[
+			select no
+					,id
+					,password
+					,name
+					,gender
+			from users
+			where no = #{no}
+		
+		]]>
+	</select>
 
 </mapper>
