@@ -57,32 +57,32 @@
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<span class="text-large bold">${authUser.id }</span>
-								<input type="hidden" name ="id" value="${authUser.id}">
+								<span class="text-large bold">${userVo.id }</span>
+								<input type="hidden" name ="id" value="${userVo.id}">
 							</div>
 	
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
-								<input type="text" id="input-pass" name="password" value="${authUser.password }" placeholder="비밀번호를 입력하세요"	>
+								<input type="text" id="input-pass" name="password" value="${userVo.password }" placeholder="비밀번호를 입력하세요"	>
 							</div>
 	
 							<!-- 이메일 -->
 							<div class="form-group">
 								<label class="form-text" for="input-name">이름</label> 
-								<input type="text" id="input-name" name="name" value="${authUser.name }" placeholder="이름을 입력하세요">
+								<input type="text" id="input-name" name="name" value="${userVo.name }" placeholder="이름을 입력하세요">
 							</div>
 	
 							<!-- //나이 -->
 							<div class="form-group">
 								<span class="form-text">성별</span> 
-								<c:if test = "${authUser.gender eq 'male' }">
+								<c:if test = "${userVo.gender eq 'male' }">
 									<label for="rdo-male">남</label> 
 									<input type="radio" id="rdo-male" name="gender" value="male" checked="checked"> 
 									<label for="rdo-female">여</label> 
 									<input type="radio" id="rdo-female" name="gender" value="female" >
 								</c:if>
-								<c:if test = "${authUser.gender eq 'female' }">
+								<c:if test = "${userVo.gender eq 'female' }">
 									<label for="rdo-male">남</label> 
 									<input type="radio" id="rdo-male" name="gender" value="male" > 
 									<label for="rdo-female">여</label> 
