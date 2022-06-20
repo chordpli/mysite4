@@ -10,7 +10,7 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public int join() {
-		return sqlSession.insert("UserMapper.join"); 
+		return sqlSession.insert("User.join"); 
 	}
 
 }
