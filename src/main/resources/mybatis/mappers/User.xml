@@ -13,7 +13,7 @@
 	</insert>
 	
 	<!-- 로그인 정보용(로그인 후 세션저장) -->
-	<select id="login" resultType = "com.javaex.vo.UserVo">
+	<select id="login" parameterType = "com.javaex.vo.UserVo" resultType = "com.javaex.vo.UserVo">
 		<![CDATA[
 			select no
 					,name
