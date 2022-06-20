@@ -60,5 +60,15 @@ select no
 from guestbook;
 
 insert into guestbook
-values (seq_guestbook_no, name, password, content, sysdate)
+values (seq_guestbook_no, name, password, content, sysdate);
 
+
+-- Users Setting
+select *
+from users;
+
+update users
+set passowrd = #{password}
+    ,name = #{name}
+    ,gender = #{gender}
+where id = #{id}

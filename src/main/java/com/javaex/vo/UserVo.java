@@ -23,6 +23,13 @@ public class UserVo {
 		this.gender = gender;
 	}
 	
+	public UserVo(String id, String password, String name, String gender) {
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+	}
+	
 	// 메소드 gs
 
 	public int getNo() {
