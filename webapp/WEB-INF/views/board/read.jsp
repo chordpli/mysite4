@@ -83,8 +83,8 @@
 								</span>
 							</div>
 							
-							<a id="btn_modify" href="./modifyform?no=${bContent.no }">수정</a>
-							<a id="btn_modify" href="./list">목록</a>
+							<a id="btn_modify" href="../modifyform/${bContent.no }">수정</a>
+							<a id="btn_modify" href="../list">목록</a>
 							
 						</form>
 						<!-- //form -->

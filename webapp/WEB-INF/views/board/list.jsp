@@ -51,9 +51,9 @@
 	
 				<div id="board">
 					<div id="list">
-						<form action="" method="">
+						<form action="./list" method="get">
 							<div class="form-group text-right">
-								<input type="text">
+								<input type="text" name = "keyword" value ="">
 								<button type="submit" id=btn_search>검색</button>
 							</div>
 						</form>
@@ -76,7 +76,9 @@
 										<td>${bVo.name }</td>
 										<td>${bVo.hit }</td>
 										<td>${bVo.regDate }</td>
-										<td><a href="./delete/${bVo.no">[삭제]</a></td>
+										<c:if test="${ authUser.no eq bVo.userNo}">
+											<td><a href="./delete/${bVo.no}">[삭제]</a></td>
+										</c:if>
 									</tr>
 								</tbody>
 							</c:forEach>
@@ -101,7 +103,9 @@
 							
 							<div class="clear"></div>
 						</div>
-						<a id="btn_write" href="./write/${bVo.no }">글쓰기</a>
+						<c:if test="${authUser != null }">
+							<a id="btn_write" href="./writeform/">글쓰기</a>
+						</c:if>
 					
 					</div>
 					<!-- //list -->

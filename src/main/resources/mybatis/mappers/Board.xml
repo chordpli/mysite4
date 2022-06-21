@@ -12,32 +12,86 @@
 		<result column="name" property ="name"/>
 	</resultMap>
 	
+	<!-- 게시판 목록 불러오기 -->
 	<select id="getBoardList" resultMap = "bMap">
 		<![CDATA[
 			select b.no no
 					,b.title title
 					,u.name name
 					,b.hit hit
-					,to_char(b.reg_date, 'yyyy-mm-dd hh24:mi:ss') day
+					,to_char(b.reg_date, 'yyyy-mm-dd hh24:mi:ss') reg_date
+					,b.user_no user_no
 			from board b, users u
 			where b.user_no = u.no
 			order by b.no desc
 		]]>
 	</select>
 	
+	<!-- 게시물 검색 -->
+	<select id="searchPost" parameterType="String" resultMap = "bMap">
+		<![CDATA[
+			select b.no no
+					,b.title title
+					,u.name name
+					,b.hit hit
+					,to_char(b.reg_date, 'yyyy-mm-dd hh24:mi:ss') reg_date
+					,b.user_no user_no
+			from board b, users u
+			where b.user_no = u.no
+			and b.title like '%'||#{keyword}||'%'
+			order by b.no desc
+		]]>
+	</select>
+	
+	<!-- 게시글 내용 불러오기 -->
 	<select id="getBoardContent" parameterType="int" resultMap = "bMap">
 		<![CDATA[
 			select b.no
 					,b.title title
 					,u.name
 					,b.hit hit
-					,to_char(b.reg_date, 'yyyy-mm-dd hh24:mi:ss') day
+					,to_char(b.reg_date, 'yyyy-mm-dd hh24:mi:ss') reg_date
 					,b.content
+					,b.user_no user_no
 			from board b, users u
 			where b.user_no = u.no
 			and b.no = #{no}
 		]]>
 	</select>
 	
-
+	<!-- 게시글 수정 -->
+	<update id="modifyPost" parameterType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			update board
+			set	title = #{title}
+				,content = #{content}
+			where no = #{no}
+		]]>
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="deletePost" parameterType="int">
+		<![CDATA[
+			delete from board
+			where no = #{no}
+		]]>
+	</delete>
+	
+	<!-- 게시물 작성 -->
+	<insert id="posting" parameterType="com.javaex.vo.BoardVo" >
+		<![CDATA[
+			insert into board
+			values (seq_board_no.nextval, #{title}, #{content}, 0, sysdate, #{userNo})
+		]]>
+	</insert>
+	
+	<!-- 게시물 조회수 상승 -->
+	<update id="postHit">
+		<![CDATA[
+			update board
+			set hit = hit + 1
+			where no = #{no}
+		]]>
+	</update>
+	
 </mapper>
