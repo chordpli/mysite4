@@ -12,6 +12,15 @@
 	
 	</insert>
 	
+	<!-- 아이디 중복체크 -->
+	<select id="overlapIdCheck">
+		<![CDATA[
+			select id
+			from users
+			where id = #{id}
+		]]>
+	</select>
+	
 	<!-- 로그인 정보용(로그인 후 세션저장) -->
 	<select id="login" parameterType = "com.javaex.vo.UserVo" resultType = "com.javaex.vo.UserVo">
 		<![CDATA[
