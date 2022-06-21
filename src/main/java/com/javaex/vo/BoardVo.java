@@ -90,11 +90,4 @@ public class BoardVo {
 		return "BoardVo [content=" + content + ", hit=" + hit + ", no=" + no + ", regDate=" + regDate + ", title="
 				+ title + ", userNo=" + userNo + "]";
 	}
-	
-
-	
-	
-	
-	
-
 }

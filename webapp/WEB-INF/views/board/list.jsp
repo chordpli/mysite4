@@ -68,48 +68,18 @@
 									<th>관리</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>123</td>
-									<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-									<td>정우성</td>
-									<td>1232</td>
-									<td>2020-12-23</td>
-									<td><a href="">[삭제]</a></td>
-								</tr>
-								<tr>
-									<td>123</td>
-									<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-									<td>정우성</td>
-									<td>1232</td>
-									<td>2020-12-23</td>
-									<td><a href="">[삭제]</a></td>
-								</tr>
-								<tr>
-									<td>123</td>
-									<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-									<td>정우성</td>
-									<td>1232</td>
-									<td>2020-12-23</td>
-									<td><a href="">[삭제]</a></td>
-								</tr>
-								<tr>
-									<td>123</td>
-									<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-									<td>정우성</td>
-									<td>1232</td>
-									<td>2020-12-23</td>
-									<td><a href="">[삭제]</a></td>
-								</tr>
-								<tr class="last">
-									<td>123</td>
-									<td class="text-left"><a href="#">게시판 게시글입니다.</a></td>
-									<td>정우성</td>
-									<td>1232</td>
-									<td>2020-12-23</td>
-									<td><a href="">[삭제]</a></td>
-								</tr>
-							</tbody>
+							<c:forEach items="${bList }" var="bVo" >
+								<tbody>
+									<tr>
+										<td>${bVo.no }</td>
+										<td class="text-left"><a href="./read/${bVo.no }">${bVo.title }</a></td>
+										<td>${bVo.name }</td>
+										<td>${bVo.hit }</td>
+										<td>${bVo.regDate }</td>
+										<td><a href="./delete/${bVo.no">[삭제]</a></td>
+									</tr>
+								</tbody>
+							</c:forEach>
 						</table>
 			
 						<div id="paging">
@@ -131,7 +101,7 @@
 							
 							<div class="clear"></div>
 						</div>
-						<a id="btn_write" href="">글쓰기</a>
+						<a id="btn_write" href="./write/${bVo.no }">글쓰기</a>
 					
 					</div>
 					<!-- //list -->
