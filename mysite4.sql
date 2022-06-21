@@ -46,8 +46,6 @@ start with 1
 nocache;
 
 
-
-
 -- GuestBook Setting
 select *
 from guestbook;

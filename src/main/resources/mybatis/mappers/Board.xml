@@ -12,7 +12,7 @@
 		<result column="name" property ="name"/>
 	</resultMap>
 	
-	<!-- 게시판 목록 불러오기 -->
+ 	<!-- 게시판 목록 불러오기 -->
 	<select id="getBoardList" resultMap = "bMap">
 		<![CDATA[
 			select b.no no
@@ -25,7 +25,8 @@
 			where b.user_no = u.no
 			order by b.no desc
 		]]>
-	</select>
+	</select> 
+	
 	
 	<!-- 게시물 검색 -->
 	<select id="searchPost" parameterType="String" resultMap = "bMap">

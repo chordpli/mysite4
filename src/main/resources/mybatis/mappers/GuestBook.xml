@@ -3,6 +3,38 @@
 
 <mapper namespace="GuestBook">
 	
-	<!--쿼리문 작성 --> 
+	<select id="getGuestBookList" resultType="com.javaex.vo.GuestBookVo">
+		<![CDATA[
+			select no
+					,name
+					,password
+					,content
+					,to_char(reg_date, 'yyyy-mm-dd hh24:mi:ss') regDate
+			from guestbook
+			order by no desc
+		]]>
+	</select>
+	
+	<insert id="postGuestBook" parameterType="com.javaex.vo.GuestBookVo">
+		<![CDATA[
+			insert into guestbook
+			values (seq_guestbook_no.nextval, #{name}, #{password}, #{content}, sysdate)
+		]]>
+	</insert>
+	
+	<delete id="deletePost" parameterType="int">
+		<![CDATA[
+			delete from guestbook
+			where no = #{no}
+		]]>
+	</delete>
+	
+	<select id="getPassword" parameterType="int" resultType="String">
+		<![CDATA[
+			select password
+			from guestbook
+			where no = #{no}
+		]]>
+	</select>
 
 </mapper>
