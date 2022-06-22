@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
@@ -109,24 +110,22 @@ public class BoardController {
 		
 		
 	// 게시글 보기
+	
 	@RequestMapping(value = "/read/{no}", method = {RequestMethod.GET, RequestMethod.POST})
 	public String read(@PathVariable ("no") int no, Model model, HttpServletRequest req) {
 		System.out.println("BoardController > read");
 		HttpSession session = req.getSession();
 		UserVo authUser =  (UserVo) session.getAttribute("authUser");
-		
-		BoardVo bContent = bService.getBoardContent(no);
+		BoardVo bContent;
+	
 		if(authUser != null) {
-			if(authUser.getNo() != bContent.getUserNo()) {
-				bService.postHit(no);
-			}
+			bContent = bService.getBoardContent(no, authUser.getNo());
+			
 		}else {
-			bService.postHit(no);
+			bContent = bService.getBoardContent(no, null);
 		}
 		
-		bContent = bService.getBoardContent(no);
 		model.addAttribute("bContent", bContent);
-		
 		return "board/read";
 	}
 	

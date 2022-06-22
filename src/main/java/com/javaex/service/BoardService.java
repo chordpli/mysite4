@@ -26,6 +26,21 @@ public class BoardService {
 		return boardDao.getBoardContent(no);
 	}
 	
+	
+	public BoardVo getBoardContent(int no, Integer userNo) {
+		
+		if(((Integer)boardDao.getBoardContent(no).getUserNo() != userNo) || userNo == null) {
+			int count = boardDao.postHit(no);
+			return boardDao.getBoardContent(no);
+		}else {
+			return boardDao.getBoardContent(no);
+		}
+	}
+	
+	public int postHit(int no) {
+		return boardDao.postHit(no);
+	}
+	
 	public int modifyPost(BoardVo boardVo) {
 		return boardDao.modifyPost(boardVo);
 	}
@@ -38,9 +53,7 @@ public class BoardService {
 		return boardDao.posting(boardVo);
 	}
 	
-	public int postHit(int no) {
-		return boardDao.postHit(no);
-	}
+
 	
 
 }
