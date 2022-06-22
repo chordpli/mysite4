@@ -127,7 +127,6 @@ public class BoardController {
 		bContent = bService.getBoardContent(no);
 		model.addAttribute("bContent", bContent);
 		
-		
 		return "board/read";
 	}
 	
