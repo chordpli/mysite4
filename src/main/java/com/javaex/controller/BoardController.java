@@ -27,7 +27,8 @@ public class BoardController {
 	
 	
 //	/***************************************게시판 목록***************************************/
-	
+
+		
 	// 게시판 목록 (+ 검색 추가)
 	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
 	public String list(@RequestParam(required = false, value= "keyword") String keyword, HttpServletRequest req, Model model) {
@@ -47,8 +48,9 @@ public class BoardController {
 		
 		return "board/list";
 	}
-	
-//	// 게시판 목록
+
+/************************************//// 에러가 발생한 코드 //// 공부하기 위해 남겨놓았습니다 //// *******************************************/
+//	// 게시판 목록									
 //	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
 //	public String list(HttpServletRequest req, Model model) {
 //		System.out.println("BoardController > list");
@@ -62,8 +64,8 @@ public class BoardController {
 //		
 //		return "board/list";
 //	}
-	
-
+//	
+//
 //	// 게시판 검색 목록
 //	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
 //	public String list(@RequestParam("keyword") String keyword, HttpServletRequest req, Model model) {
@@ -78,6 +80,8 @@ public class BoardController {
 //		
 //		return "board/list";
 //	}
+/************************************//// 에러가 발생한 코드 //// 공부하기 위해 남겨놓았습니다 //// *******************************************/
+	
 	
 	/***************************************게시글***************************************/
 	// 게시글 작성 폼
@@ -161,8 +165,6 @@ public class BoardController {
 		
 		return "redirect:../list";
 	}
-	
-		
 	
 	
 
