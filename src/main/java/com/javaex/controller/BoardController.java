@@ -28,7 +28,6 @@ public class BoardController {
 	
 	
 //	/***************************************게시판 목록***************************************/
-
 		
 	// 게시판 목록 (+ 검색 추가)
 	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})

@@ -12,7 +12,7 @@
 		<result column="name" property ="name"/>
 	</resultMap>
 	
- 	<!-- 게시판 목록 불러오기 -->
+ 	<!-- 게시판 목록 불러오기 
 	<select id="getBoardList" resultMap = "bMap">
 		<![CDATA[
 			select b.no no
@@ -28,7 +28,7 @@
 	</select> 
 	
 	
-	<!-- 게시물 검색 -->
+	게시물 검색
 	<select id="searchPost" parameterType="String" resultMap = "bMap">
 		<![CDATA[
 			select b.no no
@@ -42,10 +42,10 @@
 			and b.title like '%'||#{keyword}||'%'
 			order by b.no desc
 		]]>
-	</select>
+	</select>-->
 	
-	<!-- 게시물 검색/if문실패 
-	<select id="searchPost" parameterType="String" resultMap = "bMap">
+	<!-- 게시물 검색/if문 -->
+	<select id="getBoardList" parameterType="String" resultMap = "bMap">
 		<![CDATA[
 			select b.no no
 					,b.title title
@@ -55,13 +55,14 @@
 					,b.user_no user_no
 			from board b, users u
 			where b.user_no = u.no
-			<if test = " keyword != null " >
-				and b.title like '%'||#{keyword}||'%'
+		]]>
+			<if test = " _parameter != null " >
+				and b.title like '%'||#{value}||'%'
 			</if>
 			order by b.no desc
-		]]>
+		
 	</select>
-	-->
+	
 	
 	
 	<!-- 게시글 내용 불러오기 -->

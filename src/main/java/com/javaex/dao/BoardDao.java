@@ -21,7 +21,7 @@ public class BoardDao {
 	
 	public List<BoardVo> getBoardList(String keyword){
 		System.out.println("BoardDao > getBoardList(String Keyword)");
-		return sqlSession.selectList("Board.searchPost", keyword);
+		return sqlSession.selectList("Board.getBoardList", keyword);
 	}
 	
 	public BoardVo getBoardContent(int no) {
