@@ -23,6 +23,14 @@ public class GuestBookDao {
 		
 	}
 	
+	public int insertGuest(GuestBookVo guestBookVo) {
+		System.out.println(guestBookVo);
+		int count = sqlSession.insert("guestbook.insertSelectKey", guestBookVo);
+		
+		
+		return count;		
+	}
+	
 	public int deletePost(int no) {
 		return sqlSession.delete("GuestBook.deletePost", no);
 	}
@@ -30,5 +38,11 @@ public class GuestBookDao {
 	public String getPassword(int no) {
 		return sqlSession.selectOne("GuestBook.getPassword", no);
 	}
+	
+	public GuestBookVo getGuest(int no) {
+		System.out.println("getGuest");
+		return sqlSession.selectOne("guestbook.getGuest",no);
+	}
+	
 
 }

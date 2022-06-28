@@ -22,6 +22,16 @@ public class GuestBookService {
 		return guestBookDao.postGuestBook(guestBookVo);
 	}
 	
+	public GuestBookVo insertGuest(GuestBookVo guestBookVo) {
+		System.out.println(guestBookVo);
+		int count = guestBookDao.insertGuest(guestBookVo); 
+		System.out.println(guestBookVo);
+		
+		int no = guestBookVo.getNo();
+		GuestBookVo gVo = guestBookDao.getGuest(no);
+		return gVo;
+	}
+	
 	public int deletePost(int no) {
 		return guestBookDao.deletePost(no);
 	}
