@@ -110,24 +110,31 @@
 	</div>
 	<!-- //wrap -->
 <!-- ////////////////////////////////////////////// -->
-<div id="delButton" class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">비밀번호를 입력하세요</h4>
+   <div id="delModal" class="modal fade">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               <h4 class="modal-title">비밀번호를 입력하세요</h4>
+            </div>
+            <div class="modal-body"></div>
+            
+               비밀번호<input type="text" name="password" value="">
+               <input type="text" name="no" value="">
+            
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+               <button id="btnModalDel" type="button" class="btn btn-primary">삭제</button>
+            </div>
+         </div>
+         <!-- /.modal-content -->
       </div>
-      <div class="modal-body">
-        비밀번호 <input type="text" name ="password" value="">
-        <br> <input type="text" name ="no" value="">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" id = "btnModalDel" class="btn btn-primary">삭제</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      <!-- /.modal-dialog -->
+   </div>
+   <!-- /.modal -->
 <!-- ////////////////////////////////////////////// -->
 </body>
 
@@ -141,22 +148,88 @@ $(document).ready(function(){
 	fetchList()
 });
 
+/* 테스트 버튼을 눌렀을 때 */
+$("#listArea").on("click", ".btnDel", function() {
+		console.log("리스트 삭제버튼 클릭");
+		var $this = $(this);
+		console.log($this);
+
+		var no = $this.data("no");
+		console.log(no);
+
+		//모달창에 form no데이타 넣기
+		$("#delModal [name='password']").val("");
+		$("[name='no']").val(no);
+
+		//모달창 띄우기
+		$("#delModal").modal("show");
+
+	});
 /* 모달창 삭제버튼 클릭할 때 */
-$("#btnModalDel").on("click", function(){
-	console.log("모달창 삭제버튼 클릭")
-	
-	// 데이터 모으기
-	var password = $('#delModal [name=password]').val();
-	var no = $('[name=no]').val()
-	
-	var guestbookVo= {};
-	// 서버로 데이터 전송
-	
-	// 성공이면 리스트에서 제거하기
-	
-	// 모달창 닫기
-	
-});
+//모달창에 삭제버튼 클릭할때
+   $("#btnModalDel").on("click", function(){
+      console.log("모달창 삭제버튼 클릭");
+      
+      //데이터 모으기
+      var password = $("#delModal [name='password']").val();
+      var no = $("#delModal [name='no']").val();
+      /*      
+      var guestVo = {};
+      guestVo.password = password;
+      guestVo.no = no;
+      */
+      
+      var guestBookVo = {
+            password : password,
+            no : no
+      };
+      console.log(guestBookVo);
+      
+      
+      //서버로 전송
+      $.ajax({
+
+         url : "${pageContext.request.contextPath}/api/guestbook/remove",
+         type : "post",
+         //contentType : "application/json",
+         data : guestBookVo,
+
+         dataType : "json",
+         success : function(result) {
+            /*성공시 처리해야될 코드 작성*/
+            console.log(result);
+            
+            // 성공이면 지우고
+            
+            if(result == "success"){
+            	$("#t" +no).remove();
+            	$("#delModal").modal("hide");
+            }else{
+            	alert("비밀번호를 입력하세요");
+            }
+            // 실패 안지우고
+            
+            // 모달 창 닫기
+            
+            
+            //성공
+            
+            //실패
+            
+            //모달창 닫기
+         },
+         error : function(XHR, status, error) {
+            console.error(status + " : " + error);
+         }
+      });
+      
+      //패스워드 맞을 때 리스트에서 제거하기
+      
+      //모달창 닫기
+      
+      
+   });
+
 
 
 /* 리스트 요청 */
@@ -242,7 +315,7 @@ function render(guestbookVo, opt){
 	console.log("render()");
 	
 	var str = "";
-	str += '<table class="guestRead">';
+	str += '<table id="t' + guestbookVo.no + '" class="guestRead">';
 	str += '	<colgroup>';
 	str += '		<col style="width: 10%;">';
 	str += '		<col style="width: 40%;">';
@@ -272,7 +345,8 @@ function render(guestbookVo, opt){
 }
 
 
-/* 테스트 버튼을 눌렀을 때 */
+
+/*
 $("#listArea").on("click", ".btnDel", function(){
 	console.log("삭제 테스트 버튼 클릭");
 	var $this = $(this);
@@ -285,14 +359,7 @@ $("#listArea").on("click", ".btnDel", function(){
 	$("#delButton").modal("show");
 	
 });
- 
-$("#btnTest").on("click", function(){
-	console.log("테스트 버튼 클릭");
-	
-	// 모달창 띄우기
-	$("delButton").modal("show");
-	
-});
+*/
 </script>
 
 </html>

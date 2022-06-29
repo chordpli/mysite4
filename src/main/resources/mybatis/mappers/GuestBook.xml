@@ -55,5 +55,13 @@
         	 where no = #{no}
 		]]>
 	</select>
+	
+   <delete id="gdelete" parameterType="com.javaex.vo.GuestBookVo">
+      <![CDATA[
+         delete guestbook
+         where no = #{no}
+         and password = #{password}
+      ]]>
+   </delete>
 
 </mapper>
