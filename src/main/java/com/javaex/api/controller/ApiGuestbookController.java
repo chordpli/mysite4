@@ -40,10 +40,10 @@ public class ApiGuestbookController {
 	}
 	
 	@RequestMapping(value = "/api/guestbook/add", method = {RequestMethod.GET, RequestMethod.POST})
-	public GuestbookVo add(@ModelAttribute GuestBookVo guestBookVo) {
+	public GuestBookVo add(@ModelAttribute GuestBookVo guestBookVo) {
 		System.out.println("ApiGuestbookController>add()");
 		
-		GuestBookVo gVo = guestbookService.insertGuest(guestBookVo);
+		GuestBookVo gVo = guestbookService.addGuest(guestBookVo);
 		
 		System.out.println(gVo);
 		return gVo;

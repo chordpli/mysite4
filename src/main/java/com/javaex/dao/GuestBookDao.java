@@ -25,7 +25,7 @@ public class GuestBookDao {
 	
 	public int insertGuest(GuestBookVo guestBookVo) {
 		System.out.println(guestBookVo);
-		int count = sqlSession.insert("guestbook.insertSelectKey", guestBookVo);
+		int count = sqlSession.insert("guestbook.getGuest", guestBookVo);
 		
 		
 		return count;		
