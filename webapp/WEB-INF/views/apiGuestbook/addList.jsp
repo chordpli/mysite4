@@ -123,7 +123,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" id = "btnModalDel" class="btn btn-primary">삭제</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -140,6 +140,24 @@ $(document).ready(function(){
 	/* 리스트 요청 + 그리기 */
 	fetchList()
 });
+
+/* 모달창 삭제버튼 클릭할 때 */
+$("#btnModalDel").on("click", function(){
+	console.log("모달창 삭제버튼 클릭")
+	
+	// 데이터 모으기
+	var password = $('#delModal [name=password]').val();
+	var no = $('[name=no]').val()
+	
+	var guestbookVo= {};
+	// 서버로 데이터 전송
+	
+	// 성공이면 리스트에서 제거하기
+	
+	// 모달창 닫기
+	
+});
+
 
 /* 리스트 요청 */
 function fetchList(){
@@ -260,7 +278,7 @@ $("#listArea").on("click", ".btnDel", function(){
 	var $this = $(this);
 	var no = $this.data("no");
 	
-	$("[name=password]").val("");
+	$("#delModal [name=password]").val("");
 	$("[name=no]").val(no);
 	
 	// 모달창 띄우기
