@@ -37,15 +37,18 @@
 		]]>
 	</select>
 	
-	<insert id = "insertSelectKey" parameterType="com.javaex.vo.GuestBookVo">
-		<selectKey keyProperty="no" resultType="int" order = "BEFORE">
+	<!-- 방명록 저장(ajax) -->
+	<insert id="insertSelectKey" parameterType="com.javaex.vo.GuestBookVo">
+
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			select seq_guestbook_no.nextval from dual
 		</selectKey>
-		
-		<![CDATA[
+
+		<![CDATA[	
 			insert into guestbook
-			values ( #{no}, #{name}, #{passowrd}, #{content}, SYSDATE)
-		]]>
+         	values ( #{no }, #{name }, #{password }, #{content }, SYSDATE )
+    	]]>
+
 	</insert>
 	
 	<select id="getGuest" parameterType="int" resultType="com.javaex.vo.GuestBookVo">
@@ -56,12 +59,12 @@
 		]]>
 	</select>
 	
-   <delete id="gdelete" parameterType="com.javaex.vo.GuestBookVo">
+	<delete id="gdelete" parameterType="com.javaex.vo.GuestBookVo">
       <![CDATA[
-         delete guestbook
-         where no = #{no}
-         and password = #{password}
-      ]]>
-   </delete>
+			delete guestbook
+			where no = #{no}
+			and password = #{password}
+		]]>
+	</delete>
 
 </mapper>

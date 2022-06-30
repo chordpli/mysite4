@@ -109,149 +109,207 @@
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->
-<!-- ////////////////////////////////////////////// -->
-   <div id="delModal" class="modal fade">
-      <div class="modal-dialog">
-         <div class="modal-content">
-            <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal"
-                  aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-               <h4 class="modal-title">비밀번호를 입력하세요</h4>
-            </div>
-            <div class="modal-body"></div>
-            
-               비밀번호<input type="text" name="password" value="">
-               <input type="text" name="no" value="">
-            
-            <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-               <button id="btnModalDel" type="button" class="btn btn-primary">삭제</button>
-            </div>
-         </div>
-         <!-- /.modal-content -->
+<!-- /////////////////////////////////////////////////////////////// -->
+<!-- 삭제모달창 -->
+<div id="delModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">비밀번호를 입력하세요</h4>
       </div>
-      <!-- /.modal-dialog -->
-   </div>
-   <!-- /.modal -->
-<!-- ////////////////////////////////////////////// -->
+      <div class="modal-body">
+      	
+      	비밀번호<input type="text" name="password" value="">
+        <br><input type="text" name="no" value="">
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button id="btnModalDel" type="button" class="btn btn-danger">삭제</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /////////////////////////////////////////////////////////////// -->
+
+
 </body>
 
 <script type="text/javascript">
-
-/* 준비가 끝나면 */
+/* 준비가 끝났을 때  */
 $(document).ready(function(){
-	console.log("jquery 로 요청  data만 받는 요청");
 	
 	/* 리스트 요청 + 그리기 */
 	fetchList()
 });
 
-/* 테스트 버튼을 눌렀을 때 */
-$("#listArea").on("click", ".btnDel", function() {
-		console.log("리스트 삭제버튼 클릭");
-		var $this = $(this);
-		console.log($this);
-
-		var no = $this.data("no");
-		console.log(no);
-
-		//모달창에 form no데이타 넣기
-		$("#delModal [name='password']").val("");
-		$("[name='no']").val(no);
-
-		//모달창 띄우기
-		$("#delModal").modal("show");
-
+/* 저장 버튼을 클릭했을 때 */
+// jquery json으로 요청
+$("#btnSubmit").on("click", function(){
+	console.log("저장버튼 클릭");
+	
+	// 데이터 수집
+	var name = $("[name = name]").val();
+	var password = $("[name = password]").val();
+	var content = $("[name=content]").val();
+	
+	// 데이터 객체로 묶기
+	var guestVo = {
+			name: name,
+			password: password,
+			content: content
+	};
+	
+	console.log(guestVo);
+	
+	$.ajax({
+		
+		url : "${pageContext.request.contextPath }/api/guestbook/add2",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(guestVo),   //파라미터 정리된다
+		dataType : "json",
+		success : function(gVo){
+			
+			//1개 데이터 리스트 추가(그리기)하기
+			render(gVo, "up");
+			
+			// 입력 폼 초기화
+			$("[name='name']").val("");
+			$("[name='password']").val("");
+			$("[name='content']").val("");
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
 	});
+
+});
+
+
+/* 저장 버튼을 클릭했을 때
+// jquery 파라미터로 전송
+$("#btnSubmit").on("click", function(){
+	console.log("저장버튼 클릭");
+	
+	// 데이터 수집
+	var name = $("[name = name]").val();
+	var password = $("[name = password]").val();
+	var content = $("[name=content]").val();
+	
+	// 데이터 객체로 묶기
+	var guestVo = {
+			name: name,
+			password: password,
+			content: content
+	};
+	
+$.ajax({
+		
+		// url : "${pageContext.request.contextPath }/api/guestbook/add?name="+name+"&password="+password+"&content="+content,
+		url : "${pageContext.request.contextPath }/api/guestbook/add",
+		type : "post",
+		//contentType : "application/json",
+		data : guestVo,   //파라미터 정리된다
+		dataType : "json",
+		success : function(gVo){
+			// 1개데이터 리스트 추가(그리기)하기
+			render(gVo, "up");
+			
+			// 입력폼 초기화
+			$("[name='name']").val("");
+			$("[name='password']").val("");
+			$("[name='content']").val("");
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+}); */
+
+/* 리스트의 삭제 버튼을 클릭할 때 */
+$("#listArea").on("click", ".btnDel", function(){
+	console.log("리스트 삭제버튼 클릭");
+	var $this = $(this);
+	var no = $this.data("no");
+	
+	// 모달창에 form 값 입력
+	$('#delModal [name = password]').val("");
+	$('[name="no"]').val(no);
+	
+	// 모달창 띄우기
+	$('#delModal').modal("show");
+});
+
+
 /* 모달창 삭제버튼 클릭할 때 */
-//모달창에 삭제버튼 클릭할때
-   $("#btnModalDel").on("click", function(){
-      console.log("모달창 삭제버튼 클릭");
-      
-      //데이터 모으기
-      var password = $("#delModal [name='password']").val();
-      var no = $("#delModal [name='no']").val();
-      /*      
-      var guestVo = {};
-      guestVo.password = password;
-      guestVo.no = no;
-      */
-      
-      var guestBookVo = {
-            password : password,
-            no : no
-      };
-      console.log(guestBookVo);
-      
-      
-      //서버로 전송
-      $.ajax({
-
-         url : "${pageContext.request.contextPath}/api/guestbook/remove",
-         type : "post",
-         //contentType : "application/json",
-         data : guestBookVo,
-
-         dataType : "json",
-         success : function(result) {
-            /*성공시 처리해야될 코드 작성*/
-            console.log(result);
-            
-            // 성공이면 지우고
-            
-            if(result == "success"){
-            	$("#t" +no).remove();
-            	$("#delModal").modal("hide");
-            }else{
-            	alert("비밀번호를 입력하세요");
-            }
-            // 실패 안지우고
-            
-            // 모달 창 닫기
-            
-            
-            //성공
-            
-            //실패
-            
-            //모달창 닫기
-         },
-         error : function(XHR, status, error) {
-            console.error(status + " : " + error);
-         }
-      });
-      
-      //패스워드 맞을 때 리스트에서 제거하기
-      
-      //모달창 닫기
-      
-      
-   });
-
+$("#btnModalDel").one("click", function(){
+	console.log("모달창 삭제버튼 클릭");
+	
+	// 데이터 모으기
+	
+	var password = $('#delModal [name = password]').val();
+	var no = $('#delModal [name = no]').val();
+	
+	var guestbookVo = {
+			password: password,
+			no: no
+	};
+	
+	
+	console.log(guestbookVo);
+	
+$.ajax({
+		
+		url : "${pageContext.request.contextPath }/api/guestbook/remove",		
+		type : "post",
+		//contentType : "application/json",
+		data : guestbookVo,
+		dataType : "json",
+		success : function(result){
+			/*성공시 처리해야될 코드 작성*/
+			console.log(result);
+			
+			//성공이면 지우고
+			if(result == "success"){
+				$("#t"+no).remove();
+				$("#delModal").modal("hide");
+			
+			}else {
+				alert("비밀번호를 확인하세요");
+			}
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	//성공이면 리스트에서 제거하기
+	
+	//모달창 닫기
+	
+	
+	
+});
 
 
 /* 리스트 요청 */
 function fetchList(){
-	//리스트 요청 + 그리기
 	$.ajax({
 		
-		url : "${pageContext.request.contextPath}/api/guestbook/list",		
+		url : "${pageContext.request.contextPath }/api/guestbook/list",		
 		type : "post",
 		//contentType : "application/json",
 		//data : {name: ”홍길동"},
 		
-		
 		dataType : "json",
-		success : function(gList){
-			/*성공시 처리해야될 코드 작성*/
-			console.log(gList);
-			
-			
-			
-			for(var i = 0; i < gList.length; i++){
-				render(gList[i], "down");
+		success : function(guestbookList){
+			//화면 data + html 그린다
+			for(var i=0; i<guestbookList.length; i++){
+				render(guestbookList[i], "down");  //vo --> 화면에 그린다.
 			}
 		},
 		error : function(XHR, status, error) {
@@ -260,106 +318,44 @@ function fetchList(){
 	});
 }
 
-/* 저장 버튼을 클릭 했을 때 */
-$("#btnSubmit").on("click", function(){
-	console.log("저장버튼 클릭");
-	
-	// 데이터 수집
-	var name = $("[name = 'name']").val();
-	var password = $("[name = 'password']").val();
-	var content = $("[name = content]").val();
-	
-	// 데이터 객체로 묶기
-	var guestVo = {
-			name: name,
-			password: password,
-			content: content
-	}
-	
-	$.ajax({
-		
-		url : "${pageContext.request.contextPath }/api/guestbook/add",		
-		type : "post",
-		//contentType : "application/json",
-		//data : {name: name, password: password, content: conetent},
-		data : guestVo, // 파라미터로 정리 가능
-		
-		dataType : "json",
-		success : function(gList){
-			/*성공시 처리해야될 코드 작성*/
-			console.log(gList);
-			
-			/* 1개 데이터 리스트 추가(그리게) 하기 */
-			render(gList, "up");
-			
-			/* 입력 폼 초기화 */
-			$("[name = 'name']").val("");
-			$("[name = 'password']").val("");
-			$("[name = 'content']").val("");
-			
-/* 			for(var i = 0; i < gList.length; i++){
-				render(gList[i]);
-			} */
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
-		}
-	});
-	
-});
-
  
 
-/* 리스트 그리기 */
+/* 리스트 그리기 1개씩*/
 function render(guestbookVo, opt){
 	console.log("render()");
 	
-	var str = "";
-	str += '<table id="t' + guestbookVo.no + '" class="guestRead">';
-	str += '	<colgroup>';
-	str += '		<col style="width: 10%;">';
-	str += '		<col style="width: 40%;">';
-	str += '		<col style="width: 40%;">';
-	str += '		<col style="width: 10%;">';
-	str += '	</colgroup>';
-	str += '	<tr>';
-	str += '		<td>'+guestbookVo.no+'</td>';
-	str += '		<td>'+guestbookVo.name+'</td>';
-	str += '		<td>'+guestbookVo.regDate+'</td>';
-	// 대문자 인식이 안됨. "data-" 뒤에 Vo.
-	str += '		<td><button class ="btnDel" type="button" data-no="'+guestbookVo.no+'"> 삭제 </button></td>';
-	str += '	</tr>';
-	str += '	<tr>';
-	str += '		<td colspan=4 class="text-left">'+guestbookVo.content+'</td>';
-	str += '</tr>';
-	str += '</table>';
+	var str = '';
+	str += '<table id="t'+guestbookVo.no+'" class="guestRead">' ;
+	str += '    <colgroup>' ;
+	str += '        <col style="width: 10%;">' ;
+	str += '        <col style="width: 40%;">' ;
+	str += '        <col style="width: 40%;">' ;
+	str += '        <col style="width: 10%;">' ;
+	str += '    </colgroup>' ;
+	str += '    <tr>' ;
+	str += '        <td>'+guestbookVo.no+'</td>' ;
+	str += '        <td>'+guestbookVo.name+'</td>' ;
+	str += '        <td>'+guestbookVo.regDate+'</td>' ;
+	str += '        <td><button class="btnDel" type="button" data-no="'+ guestbookVo.no +'">삭제</button></td>' ;
+	str += '    </tr>' ;
+	str += '    <tr>' ;
+	str += '        <td colspan=4 class="text-left">'+guestbookVo.content+'</td>' ;
+	str += '    </tr>' ;
+	str += '</table>' ;
 	
 	if(opt == "down"){
-		$('#listArea').append(str);	
+		$("#listArea").append(str);	
+	
 	}else if(opt == "up"){
-		$('#listArea').prepend(str);
-	}else{
-		console.log("opt 오류");
+		$("#listArea").prepend(str);
+	
+	}else {
+		console.log("opt오류");
 	}
 	
+	
+	
 }
-
-
-
-/*
-$("#listArea").on("click", ".btnDel", function(){
-	console.log("삭제 테스트 버튼 클릭");
-	var $this = $(this);
-	var no = $this.data("no");
-	
-	$("#delModal [name=password]").val("");
-	$("[name=no]").val(no);
-	
-	// 모달창 띄우기
-	$("#delButton").modal("show");
-	
-});
-*/
 </script>
 
 </html>

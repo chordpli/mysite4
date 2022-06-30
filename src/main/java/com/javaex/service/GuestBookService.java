@@ -22,15 +22,6 @@ public class GuestBookService {
 		return guestBookDao.postGuestBook(guestBookVo);
 	}
 
-	public GuestBookVo insertGuest(GuestBookVo guestBookVo) {
-		System.out.println(guestBookVo);
-		int count = guestBookDao.insertGuest(guestBookVo);
-		System.out.println(guestBookVo);
-
-		int no = guestBookVo.getNo();
-		GuestBookVo gVo = guestBookDao.getGuest(no);
-		return gVo;
-	}
 
 	// 방명록 저장(ajax)
 	public GuestBookVo addGuest(GuestBookVo guestbookVo) {
@@ -38,7 +29,7 @@ public class GuestBookService {
 
 		// 저장
 		System.out.println("전-->" + guestbookVo);
-		int count = guestBookDao.insertGuest(guestbookVo);
+		int count = guestBookDao.insertSelectKey(guestbookVo);
 		System.out.println("후-->" + guestbookVo);
 
 		int no = guestbookVo.getNo();
