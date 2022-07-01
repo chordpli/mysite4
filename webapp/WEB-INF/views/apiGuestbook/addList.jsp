@@ -262,7 +262,7 @@ $("#btnModalDel").one("click", function(){
 	
 	console.log(guestbookVo);
 	
-$.ajax({
+	$.ajax({
 		
 		url : "${pageContext.request.contextPath }/api/guestbook/remove",		
 		type : "post",

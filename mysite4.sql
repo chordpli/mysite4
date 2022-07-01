@@ -8,6 +8,24 @@ create table guestbook(
     ,primary key (no)
 );
 
+-- table 持失
+create table files(
+    no number
+    ,org_name varchar2(100)
+    ,save_name varchar2(100)
+    ,file_path varchar2(100)
+    ,file_size number(38)
+    ,primary key(no)
+);
+
+select *
+from files;
+
+create sequence seq_files_no
+increment by 1
+start with 1
+nocache;
+
 -- Users Table 持失
 
 create table users(
@@ -69,4 +87,31 @@ update users
 set passowrd = #{password}
     ,name = #{name}
     ,gender = #{gender}
-where id = #{id}
+where id = #{id};
+
+-------------- gallery table 持失
+create table gallery(
+        no number
+        ,user_no number
+        ,content varchar2(1000)
+        ,file_path varchar2(500)
+        ,org_name varchar2(200)
+        ,file_size number
+        ,primary key(no)
+        ,constraint gallery_no_fk foreign key(user_no)
+        references users(no)
+);
+
+drop table gallery;
+-- board table 持失
+create table board(
+        no number
+        ,title varchar2(50)
+        ,content varchar2(4000)
+        ,hit number default 0
+        ,reg_date date not null
+        ,user_no number not null
+        ,primary key(no)
+        ,constraint user_no_fk foreign key(user_no)
+        references users(no)
+);

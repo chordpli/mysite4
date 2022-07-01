@@ -8,6 +8,9 @@ public class FileVo {
 	private String filePath;
 	private long fileSize;
 	
+	public FileVo() {
+	}
+	
 	public FileVo(int no, String orgName, String saveName, String filePath, long fileSize) {
 		super();
 		this.no = no;

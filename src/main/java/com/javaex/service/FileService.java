@@ -50,6 +50,10 @@ public class FileService {
 		
 		// DB 저장 --> 과제
 		
+		int count = fileDao.insertFile(fileVo);
+		System.out.println("fileService > insertFile()" + fileVo);
+		System.out.println(count + " 저장되었습니다. ");
+		
 	// (2) 파일 저장
 		try {
 			byte[] fileData = file.getBytes();

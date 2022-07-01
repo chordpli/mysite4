@@ -32,8 +32,6 @@ public class FileController {
 		
 		model.addAttribute("saveName", saveName);
 		
-		
-		
 		return "fileupload/result";
 		
 	}

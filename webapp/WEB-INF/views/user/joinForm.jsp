@@ -7,8 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- css -->
 <link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
+
+<!-- js -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 
 </head>
 
@@ -52,13 +57,14 @@
 	
 				<div id="user">
 					<div id="joinForm">
-						<form action="./join" method="get">
+						<form id="join-Form" action="./join" method="get">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
 								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-								<button type="button" id="">중복체크</button>
+								<button type="button" id="overlapIdCheck">중복체크</button>
+								
 							</div>
 	
 							<!-- 비밀번호 -->
@@ -116,5 +122,37 @@
 	<!-- //wrap -->
 
 </body>
+
+<script type="text/javascript">
+$('#join-Form').on("submit",function(){
+	console.log("회원가입 버튼");
+	
+	var id = $("#input-uid").val();
+	var password = $("#input-pass").val();
+	
+	if(id =="" || id == null){
+		alert("아이디를 입력해주세요");
+		return false;
+	}
+	
+	if(password.length < 4){
+		alert("비밀번호를 확인하세요");
+		return false;
+	}
+	
+	// 약관동의
+	var agree = $("#chk-agree").is(":checked");
+	
+	if(agree == false){
+		alert("약관에 동의해주세요");
+		return false;
+	}
+	
+	return true;
+});
+
+
+
+</script>
 
 </html>

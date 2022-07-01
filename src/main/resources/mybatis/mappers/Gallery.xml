@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Gallery">
+	<resultMap id = "resultGMap" type = "com.javaex.vo.GalleryVo">
+		<result column="no" property = "no"/>
+		<result column="user_no" property = "userNo"/>
+		<result column="content" property = "content"/>
+		<result column="file_path" property = "filePath"/>
+		<result column="org_name" property = "orgName"/>
+		<result column="save_name" property = "saveName"/>
+		<result column="file_size" property = "fileSize"/>
+	</resultMap>
+	
+	<parameterMap type="com.javaex.vo.GalleryVo" id="parameterGMap">
+		<parameter property="no"/>
+		<parameter property="userNo"/>
+		<parameter property="content"/>
+		<parameter property="filePath"/>
+		<parameter property="orgName"/>
+		<parameter property="saveName"/>
+		<parameter property="fileSize"/>
+	</parameterMap>
+	
+	
+	<insert id="insertImage" parameterMap="parameterGMap">
+	
+		insert into gallery
+		values (seq_gallery_no.nextval(), #{userNo}, #{content}, #{filePath}, #{orgName}, #{saveName}, #{fileSize})
+	
+	
+	</insert>
+	
+	
+	
+	
+	
+</mapper>
