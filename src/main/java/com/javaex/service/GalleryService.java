@@ -4,11 +4,11 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.GalleryDao;
@@ -18,7 +18,7 @@ import com.javaex.vo.GalleryVo;
 public class GalleryService {
 	
 	@Autowired
-	GalleryDao gDao;
+	private GalleryDao gDao;
 	
 	public String save(MultipartFile file, int userNo, String content ) {
 		System.out.println("GalleryService > save()");
@@ -31,7 +31,7 @@ public class GalleryService {
 		String exName = orgName.substring(orgName.lastIndexOf("."));
 		
 		// 파일 저장명
-		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString();
+		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString()+exName;
 		
 		// 파일 경로
 		String filePath = saveDir + "\\" +saveName;
@@ -67,6 +67,20 @@ public class GalleryService {
 		
 	}
 	
+	public List<GalleryVo> getGalleryList(){
+		System.out.println("GalleryService > getGalleryList()");
+		List<GalleryVo> gList = gDao.getGalleryList();
+		System.out.println("GalleryService = " + gList);
+		return gList;
+	}
+	
+	public GalleryVo getGalleryImage() {
+		System.out.println("GalleryService > getGalleryImage()");
+		
+		GalleryVo gVo = gDao.getGalleryImage();
+		
+		return gVo;
+	}
 	
 
 }

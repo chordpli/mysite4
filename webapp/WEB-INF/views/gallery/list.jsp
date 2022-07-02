@@ -57,14 +57,14 @@
 					<ul id="viewArea">
 						
 						<!-- 이미지반복영역 -->
-						<%-- <c:forEach items=${gList} var="gVo">
+						<c:forEach items="${gList}" var="gVo">
 							<li>
 								<div class="view" >
-									<img class="imgItem" src="${pageContext.request.contextPath}/upload/${requestScope.saveName}">
-									<div class="imgWriter">작성자: <strong>유재석</strong></div>
+									<img class="imgItem" src="${pageContext.request.contextPath}/upload/${gVo.saveName}">
+									<div class="imgWriter">작성자: <strong>${gVo.userName}</strong></div>
 								</div>
 							</li>
-						</c:forEach> --%>
+						</c:forEach>
 						<!-- 이미지반복영역 -->
 						
 						
@@ -162,7 +162,31 @@ $('#btnImgUpload').on("click", function(){
 });
 
 
-
+$('#viewArea').on("click",".imgItem", function(){
+	console.log("이미지 클릭")
+	
+	$('#viewModal').modal("show");
+	
+	$.ajax({
+		
+		url : "${pageContext.request.contextPath }/gallery/image/${gVo.saveName}",		
+		type : "post",
+		//contentType : "application/json",
+		//data : {name: ”홍길동"},
+		
+		dataType : "json",
+		success : function(guestbookList){
+			//화면 data + html 그린다
+			for(var i=0; i<guestbookList.length; i++){
+				render(guestbookList[i], "down");  //vo --> 화면에 그린다.
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
+});
 
 
 </script>

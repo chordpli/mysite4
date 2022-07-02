@@ -26,13 +26,36 @@
 	<insert id="insertImage" parameterMap="parameterGMap">
 	
 		insert into gallery
-		values (seq_gallery_no.nextval(), #{userNo}, #{content}, #{filePath}, #{orgName}, #{saveName}, #{fileSize})
-	
+		values (seq_gallery_no.nextval, #{userNo}, #{content}, #{filePath}, #{orgName}, #{saveName}, #{fileSize})
 	
 	</insert>
 	
+	<select id="getGalleryList" resultMap="resultGMap">
+		
+		<![CDATA[
+			select g.no no
+			        ,g.user_no userNo
+			        ,g.content content
+			        ,g.save_name saveName
+			        ,u.name userName
+			from gallery g, users u
+			where g.user_no = u.no
+		]]>
 	
+	</select> 
 	
+	<select id="getGalleryImage" resultMap="resultGMap">
+		
+		<![CDATA[
+			select g.no no
+			        ,g.user_no userNo
+			        ,g.content content
+			        ,g.save_name saveName
+			        ,u.name userName
+			from gallery g, users u
+			where g.user_no = u.no
+		]]>
 	
+	</select> 
 	
 </mapper>

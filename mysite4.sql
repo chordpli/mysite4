@@ -1,4 +1,4 @@
--- guestBook table »ý¼º
+-- guestBook table ï¿½ï¿½ï¿½ï¿½
 create table guestbook(
     no number
     ,name varchar2(80)
@@ -8,7 +8,7 @@ create table guestbook(
     ,primary key (no)
 );
 
--- table »ý¼º
+-- table ï¿½ï¿½ï¿½ï¿½
 create table files(
     no number
     ,org_name varchar2(100)
@@ -26,7 +26,7 @@ increment by 1
 start with 1
 nocache;
 
--- Users Table »ý¼º
+-- Users Table ï¿½ï¿½ï¿½ï¿½
 
 create table users(
         no number
@@ -37,13 +37,13 @@ create table users(
         ,primary key(no)
 );
 
--- users no ½ÃÄö½º »ý¼º
+-- users no ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 create sequence seq_users_no
 increment by 1
 start with 1
 nocache;
 
--- board table »ý¼º
+-- board table ï¿½ï¿½ï¿½ï¿½
 create table board(
         no number
         ,title varchar2(50)
@@ -89,21 +89,38 @@ set passowrd = #{password}
     ,gender = #{gender}
 where id = #{id};
 
--------------- gallery table »ý¼º
+-------------- gallery table ï¿½ï¿½ï¿½ï¿½
 create table gallery(
         no number
         ,user_no number
         ,content varchar2(1000)
         ,file_path varchar2(500)
         ,org_name varchar2(200)
+        ,save_name varchar2(500)
         ,file_size number
         ,primary key(no)
         ,constraint gallery_no_fk foreign key(user_no)
         references users(no)
 );
 
+create sequence seq_gallery_no
+increment by 1
+start with 1
+nocache;
+
 drop table gallery;
--- board table »ý¼º
+
+select g.no
+        ,g.user_no
+        ,g.content
+        ,g.save_name
+        ,u.name
+from gallery g, users u
+where g.user_no = u.no;
+
+
+
+-- board table ï¿½ï¿½ï¿½ï¿½
 create table board(
         no number
         ,title varchar2(50)

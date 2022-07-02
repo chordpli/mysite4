@@ -1,5 +1,7 @@
 package com.javaex.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,5 +19,14 @@ public class GalleryDao {
 		return sqlSession.insert("Gallery.insertImage", galleryVo);
 		
 	}
+	
+	public List<GalleryVo> getGalleryList(){
+		System.out.println("GalleryDao > getGalleryList()");
+		return sqlSession.selectList("Gallery.getGalleryList");
+	}
 
+	public GalleryVo getGalleryImage() {
+		System.out.println("GalleryDao > getGalleryImage()");
+		return sqlSession.selectOne("Gallery.getGalleryImage");
+	}
 }
