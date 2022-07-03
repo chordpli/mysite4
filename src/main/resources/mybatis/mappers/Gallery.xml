@@ -43,20 +43,15 @@
 		]]>
 	
 	</select> 
+
 	
-	<select id="getGalleryImage" parameterType="int" resultMap="resultGMap">
-		
+	<delete id="deleteImage" parameterType="int">
+	
 		<![CDATA[
-			select g.no no
-			        ,g.user_no userNo
-			        ,g.content content
-			        ,g.save_name saveName
-			        ,u.name userName
-			from gallery g, users u
-			where g.user_no = u.no
-			and g.no = #{no}
+			delete from gallery
+			where no = #{no}
 		]]>
-	
-	</select> 
+		
+	</delete>
 	
 </mapper>

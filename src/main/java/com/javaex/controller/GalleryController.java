@@ -40,23 +40,20 @@ public class GalleryController {
 		System.out.println("GalleryController > upload()");
 		System.out.println(file + " / " + userNo + " / " + content);
 		
-		
 		System.out.println(file.getOriginalFilename());
 		
-		
 		String saveName = gService.save(file, userNo, content);
-		
 		
 		return "redirect:/gallery/list";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/gallery/image", method = {RequestMethod.GET, RequestMethod.POST})
-	public GalleryVo image(@RequestBody int no, Model model) {
+	@RequestMapping(value = "/gallery/delete", method = {RequestMethod.GET, RequestMethod.POST})
+	public int delete(@RequestBody int no, Model model) {
+		System.out.println("GalleryController > delete");
 		
-		GalleryVo gVo = gService.getGalleryImage(no);
-		model.addAttribute("gVo", gVo);
+		int count = 1;
 		
-		return gVo;
+		return count;
 	}
 }
