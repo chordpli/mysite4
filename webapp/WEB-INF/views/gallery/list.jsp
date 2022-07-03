@@ -59,7 +59,7 @@
 						<!-- 이미지반복영역 -->
 						<c:forEach items="${gList}" var="gVo">
 							<li>
-								<div class="view" data-no="${gVo.no}" data-user = "${gVo.userNo}" data-save="${gVo.saveName }" data-content="${gVo.content }" >
+								<div class="view" id = "t${gVo.no}" data-no="${gVo.no}" data-user = "${gVo.userNo}" data-save="${gVo.saveName }" data-content="${gVo.content }" data-auth="${authUser.no}">
 									<img class="imgItem" src="${pageContext.request.contextPath}/upload/${gVo.saveName}">
 									<div class="imgWriter">작성자: <strong>${gVo.userName}</strong></div>
 								</div>
@@ -108,6 +108,7 @@
 					<div class="modal-footer">
 						<input type="text" name = "userNo" value = "${authUser.no}">
 						<button type="submit" class="btn" id="btnUpload">등록</button>
+						
 					</div>
 				</form>
 				
@@ -138,12 +139,10 @@
 					
 				</div>
 				<form method="" action="">
-					<div class="modal-footer">
-					<input type="text" id="delUserNo" value="">
-					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-					<c:if test="${authUser != null}">
-						<button type="button" class="btn btn-danger" id="btnDel">삭제</button>
-					</c:if>
+				<div class="modal-footer">
+					<button type="button" id = "preDel" class="btn btn-default" data-dismiss="modal">닫기</button>
+					<input type ="hidden" id = "imgNo" name = "no" value="">
+					<span class = "change"></span>
 				</div>
 				
 				
@@ -153,37 +152,29 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->	
 
-
 </body>
 
 <script type="text/javascript">
-
+	
 /* 모달창 삭제버튼 클릭할 때 */
 $("#btnDel").one("click", function(){
 	console.log("모달창 삭제버튼 클릭");
 	
 	// 데이터 모으기
 	
-	var password = $('#delModal [name = password]').val();
-	var no = $('#delModal [name = no]').val();
+	var no = $('#imgNo [name = no]').val();
 	
-	var guestbookVo = {
-			password: password,
-			no: no
-	};
+	console.log(no);
 	
-	
-	console.log(guestbookVo);
-	
-	$.ajax({
+/* 	$.ajax({
 		
 		url : "${pageContext.request.contextPath }/gallery/delete",		
 		type : "post",
 		//contentType : "application/json",
-		data : guestbookVo,
+		data : no,
 		dataType : "json",
 		success : function(result){
-			/*성공시 처리해야될 코드 작성*/
+			//성공시 처리해야될 코드 작성
 			console.log(result);
 			
 			//성공이면 지우고
@@ -199,7 +190,7 @@ $("#btnDel").one("click", function(){
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
-	});
+	}); */
 	//성공이면 리스트에서 제거하기
 	
 	//모달창 닫기
@@ -215,29 +206,31 @@ $('#btnImgUpload').on("click", function(){
 });
 
 
-$('#viewArea').on("click",".view", function(){
+
+$('#viewArea').off('click').on("click",".view", function(){
 	console.log("이미지 클릭")
 	var $this = $(this)
 	var no= $this.data("no");
 	var user = $this.data("user");
 	var saveName= $this.data("save");
 	var content = $this.data("content");
+	var auth = $this.data("auth");
 	
-	
-	console.log("번호" + no);
-	console.log("유저번호" + user);
-	console.log(content);
 	var adr = "${pageContext.request.contextPath}/upload/" + saveName;
-	console.log(adr);
 	
+	if(user == auth){
+		$('.change').html('<button type="button" class="btn btn-danger" id="btnDel">삭제</button>');
+	}
+	
+	
+	$('#user').val(user);
+	$('#imgNo').val(no);
 	
 	$('#viewModelImg').attr('src', adr);
 	$('#viewModelContent').text(content);
 	$('#delUserNo').val(user);
 	$('#viewModal').modal("show");
-	
 });
-
 
 </script>
 
