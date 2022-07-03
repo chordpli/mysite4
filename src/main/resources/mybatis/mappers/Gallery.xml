@@ -44,7 +44,7 @@
 	
 	</select> 
 	
-	<select id="getGalleryImage" resultMap="resultGMap">
+	<select id="getGalleryImage" parameterType="int" resultMap="resultGMap">
 		
 		<![CDATA[
 			select g.no no
@@ -54,6 +54,7 @@
 			        ,u.name userName
 			from gallery g, users u
 			where g.user_no = u.no
+			and g.no = #{no}
 		]]>
 	
 	</select> 

@@ -62,6 +62,7 @@
 								<div class="view" >
 									<img class="imgItem" src="${pageContext.request.contextPath}/upload/${gVo.saveName}">
 									<div class="imgWriter">작성자: <strong>${gVo.userName}</strong></div>
+									<input type="text" name = "no" value="${gVo.no }">
 								</div>
 							</li>
 						</c:forEach>

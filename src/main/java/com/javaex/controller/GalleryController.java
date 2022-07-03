@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.GalleryService;
@@ -48,10 +50,11 @@ public class GalleryController {
 		return "redirect:/gallery/list";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/gallery/image", method = {RequestMethod.GET, RequestMethod.POST})
-	public String image(Model model) {
+	public GalleryVo image(@RequestBody int no, Model model) {
 		
-		GalleryVo gVo = gService.getGalleryImage();
+		GalleryVo gVo = gService.getGalleryImage(no);
 		model.addAttribute("gVo", gVo);
 		
 		return gVo;

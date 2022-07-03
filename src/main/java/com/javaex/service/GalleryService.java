@@ -74,10 +74,10 @@ public class GalleryService {
 		return gList;
 	}
 	
-	public GalleryVo getGalleryImage() {
+	public GalleryVo getGalleryImage(int no) {
 		System.out.println("GalleryService > getGalleryImage()");
 		
-		GalleryVo gVo = gDao.getGalleryImage();
+		GalleryVo gVo = gDao.getGalleryImage(no);
 		
 		return gVo;
 	}

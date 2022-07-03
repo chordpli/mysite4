@@ -25,8 +25,8 @@ public class GalleryDao {
 		return sqlSession.selectList("Gallery.getGalleryList");
 	}
 
-	public GalleryVo getGalleryImage() {
+	public GalleryVo getGalleryImage(int no) {
 		System.out.println("GalleryDao > getGalleryImage()");
-		return sqlSession.selectOne("Gallery.getGalleryImage");
+		return sqlSession.selectOne("Gallery.getGalleryImage", no);
 	}
 }
