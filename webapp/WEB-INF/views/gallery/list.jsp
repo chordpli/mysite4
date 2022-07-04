@@ -174,7 +174,7 @@ $('#viewArea').on("click",".view", function(){
 	var user = $this.data("user");
 	var saveName= $this.data("save");
 	var content = $this.data("content");
-	var auth = data("auth");
+	var auth = $('#viewArea').data("auth");
 	
 	var adr = "${pageContext.request.contextPath}/upload/" + saveName;
 	
