@@ -137,11 +137,12 @@
 						<p id="viewModelContent"></p>
 					</div>
 					
+					<input type="hidden" name = "no" id = "imgNo">
+					
 				</div>
 				<form method="" action="">
 				<div class="modal-footer">
 					<button type="button" id = "preDel" class="btn btn-default" data-dismiss="modal">닫기</button>
-					<input type ="hidden" id = "imgNo" name = "no" value="">
 					<span class = "change"></span>
 				</div>
 				
@@ -166,7 +167,7 @@ $('#btnImgUpload').on("click", function(){
 
 
 
-$('#viewArea').off('click').on("click",".view", function(){
+$('#viewArea').on("click",".view", function(){
 	console.log("이미지 클릭")
 	var $this = $(this)
 	var no= $this.data("no");
@@ -184,6 +185,7 @@ $('#viewArea').off('click').on("click",".view", function(){
 	
 	$('#user').val(user);
 	$('#imgNo').val(no);
+	console.log($('#imgNo').val());
 	
 	$('#viewModelImg').attr('src', adr);
 	$('#viewModelContent').text(content);
@@ -192,16 +194,16 @@ $('#viewArea').off('click').on("click",".view", function(){
 });
 
 /* 모달창 삭제버튼 클릭할 때 */
-$("#btnDel").one("click", ".btn-danger", function(){
+$(".change").one("click", "#btnDel", function(){
 	console.log("모달창 삭제버튼 클릭");
 	
 	// 데이터 모으기
 	
-	var no = $('#imgNo [name = no]').val();
+	var no = $('.modal-body [name = "no"]').val();
 	
 	console.log(no);
 	
-/* 	$.ajax({
+	$.ajax({
 		
 		url : "${pageContext.request.contextPath }/gallery/delete",		
 		type : "post",
@@ -225,7 +227,7 @@ $("#btnDel").one("click", ".btn-danger", function(){
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
-	}); */
+	}); 
 	//성공이면 리스트에서 제거하기
 	
 	//모달창 닫기

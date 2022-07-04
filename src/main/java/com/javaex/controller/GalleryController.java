@@ -52,7 +52,8 @@ public class GalleryController {
 	public int delete(@RequestBody int no, Model model) {
 		System.out.println("GalleryController > delete");
 		
-		int count = 1;
+		
+		int count = gService.deleteGallery(no);
 		
 		return count;
 	}

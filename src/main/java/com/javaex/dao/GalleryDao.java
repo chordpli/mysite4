@@ -24,6 +24,11 @@ public class GalleryDao {
 		System.out.println("GalleryDao > getGalleryList()");
 		return sqlSession.selectList("Gallery.getGalleryList");
 	}
+	
+	public int deleteImage(int no) {
+		System.out.println("GalleryDao > deleteImage()");
+		return sqlSession.delete("Gallery.deleteImage", no);
+	}
 
 
 }

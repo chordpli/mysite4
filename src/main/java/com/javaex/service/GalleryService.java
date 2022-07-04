@@ -74,6 +74,10 @@ public class GalleryService {
 		return gList;
 	}
 	
+	public int deleteGallery(int no) {
+		System.out.println("GalleryService > deleteGallery");
+		return gDao.deleteImage(no);
+	}
 
 	
 
