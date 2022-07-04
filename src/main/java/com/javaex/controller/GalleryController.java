@@ -49,12 +49,12 @@ public class GalleryController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/gallery/delete", method = {RequestMethod.GET, RequestMethod.POST})
-	public int delete(@RequestBody int no, Model model) {
+	public String delete(@RequestBody int no) {
 		System.out.println("GalleryController > delete");
+		System.out.println(no);
 		
+		String state = gService.deleteGallery(no);
 		
-		int count = gService.deleteGallery(no);
-		
-		return count;
+		return state;
 	}
 }

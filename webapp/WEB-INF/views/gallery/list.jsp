@@ -54,12 +54,12 @@
 						<div class="clear"></div>
 						
 			
-					<ul id="viewArea">
+					<ul id="viewArea" data-auth="${authUser.no}">
 						
 						<!-- 이미지반복영역 -->
 						<c:forEach items="${gList}" var="gVo">
 							<li>
-								<div class="view" id = "t${gVo.no}" data-no="${gVo.no}" data-user = "${gVo.userNo}" data-save="${gVo.saveName }" data-content="${gVo.content }" data-auth="${authUser.no}">
+								<div class="view" id = "t${gVo.no}" data-no="${gVo.no}" data-user = "${gVo.userNo}" data-save="${gVo.saveName }" data-content="${gVo.content }" >
 									<img class="imgItem" src="${pageContext.request.contextPath}/upload/${gVo.saveName}">
 									<div class="imgWriter">작성자: <strong>${gVo.userName}</strong></div>
 								</div>
@@ -169,12 +169,12 @@ $('#btnImgUpload').on("click", function(){
 
 $('#viewArea').on("click",".view", function(){
 	console.log("이미지 클릭")
-	var $this = $(this)
+	var $this = $(this);
 	var no= $this.data("no");
 	var user = $this.data("user");
 	var saveName= $this.data("save");
 	var content = $this.data("content");
-	var auth = $this.data("auth");
+	var auth = data("auth");
 	
 	var adr = "${pageContext.request.contextPath}/upload/" + saveName;
 	
@@ -182,7 +182,8 @@ $('#viewArea').on("click",".view", function(){
 		$('.change').html('<button type="button" class="btn btn-danger" id="btnDel">삭제</button>');
 	}
 	
-	
+	console.log("게시판제작유저 : " + user);
+	console.log("로그인유저 : " + auth);
 	$('#user').val(user);
 	$('#imgNo').val(no);
 	console.log($('#imgNo').val());
@@ -194,7 +195,7 @@ $('#viewArea').on("click",".view", function(){
 });
 
 /* 모달창 삭제버튼 클릭할 때 */
-$(".change").one("click", "#btnDel", function(){
+$(".modal-footer").one("click", "#btnDel", function(){
 	console.log("모달창 삭제버튼 클릭");
 	
 	// 데이터 모으기
@@ -207,8 +208,9 @@ $(".change").one("click", "#btnDel", function(){
 		
 		url : "${pageContext.request.contextPath }/gallery/delete",		
 		type : "post",
-		//contentType : "application/json",
-		data : no,
+		contentType : "application/json",
+		data : JSON.stringify(no),
+		
 		dataType : "json",
 		success : function(result){
 			//성공시 처리해야될 코드 작성
@@ -217,7 +219,7 @@ $(".change").one("click", "#btnDel", function(){
 			//성공이면 지우고
 			if(result == "success"){
 				$("#t"+no).remove();
-				$("#delModal").modal("hide");
+				$("#viewModal").modal("hide");
 			
 			}else {
 				alert("비밀번호를 확인하세요");

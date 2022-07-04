@@ -74,9 +74,18 @@ public class GalleryService {
 		return gList;
 	}
 	
-	public int deleteGallery(int no) {
+	public String deleteGallery(int no) {
 		System.out.println("GalleryService > deleteGallery");
-		return gDao.deleteImage(no);
+		String state;
+		
+		int count = gDao.deleteImage(no);
+
+		if (count > 0) {
+			state = "success";
+		} else {
+			state = "fail";
+		}
+		return state;
 	}
 
 	
