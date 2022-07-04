@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rBoard">
+	<resultMap id="rMap" type = "com.javaex.vo.RBoardVo">
+		<result column="no" property ="no"/>
+		<result column="user_no" property ="userNo"/>
+		<result column="title" property ="title"/>
+		<result column="content" property ="content"/>
+		<result column="hit" property ="hit"/>
+		<result column="reg_date" property ="regDate"/>
+		<result column="group_no" property ="groupNo"/>
+		<result column="order_no" property ="orderNo"/>
+		<result column="depth" property ="depth"/>
+		<result column="name" property ="userName"/>
+	</resultMap>
+	
+	<parameterMap type="com.javaex.vo.RBoardVo" id="rpMap">
+		<parameter property ="no"/>
+		<parameter property ="userNo"/>
+		<parameter property ="title"/>
+		<parameter property ="content"/>
+		<parameter property ="hit"/>
+		<parameter property ="regDate"/>
+		<parameter property ="groupNo"/>
+		<parameter property ="orderNo"/>
+		<parameter property ="depth"/>
+		<parameter property ="userName"/>
+	</parameterMap>
+	
+	<select id="rBoardList" resultType="com.javaex.vo.RBoardVo">
+		<![CDATA[
+			select r.no no
+					,r.user_no userNo
+					,r.title title
+					,r.hit hit
+					,to_char(r.reg_date, 'yyyy-mm-dd hh24:mi:ss') regDate
+					,r.group_no groupNo
+					,r.order_no orderNo
+					,r.depth depth
+					,u.name userName
+			from rboard r, users u
+			where u.no = r.user_no
+			order by groupNo desc
+					,orderNo asc
+					
+		]]>
+	</select>
+	
+	
+	<select id="rBoardRead" parameterType="int" resultType="com.javaex.vo.RBoardVo">
+		<![CDATA[
+			select r.no no
+					,r.user_no userNo
+					,r.title title
+					,r.content content
+					,r.hit hit
+					,to_char(r.reg_date, 'yyyy-mm-dd hh24:mi:ss') regDate
+					,r.group_no groupNo
+					,r.order_no orderNo
+					,r.depth depth
+					,u.name userName
+			from rboard r, users u
+			where u.no = r.user_no
+			and r.no = #{no}
+		]]>
+	</select>
+	
+	
+	<select id = "getStair" parameterType="int" resultType="com.javaex.vo.RBoardVo">
+		<![CDATA[
+			select group_no groupNo
+					,order_no orderNo
+					,depth depth
+			from rboard
+			where no = #{no}
+		]]>
+	</select>
+	
+	<insert id="insertBoard" parameterMap="rpMap">
+		<![CDATA[
+			insert into rboard
+			values (seq_rboard_no.nextval, #{userNo}, #{title}, #{content}, 0, sysdate, seq_rboard_group.nextval, 1, 0)
+		]]>
+	</insert>
+	
+	<insert id="replyBoard" parameterMap="rpMap">
+		<![CDATA[
+			insert into rboard
+			values (seq_rboard_no.nextval, #{userNo}, #{title}, #{content}, 0, sysdate, #{groupNo}, #{orderNo}, #{depth})
+		]]>
+	</insert>
+
+</mapper>

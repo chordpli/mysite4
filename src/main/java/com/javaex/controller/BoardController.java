@@ -128,6 +128,7 @@ public class BoardController {
 		return "board/read";
 	}
 	
+	
 	// 게시글 수정 폼
 	@RequestMapping(value = "/modifyform/{no}", method = {RequestMethod.GET, RequestMethod.POST})
 	public String modifyForm(@PathVariable ("no") int no, Model model) {

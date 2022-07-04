@@ -45,51 +45,32 @@
 				<!-- //content-head -->
 	
 				<div id="board">
-					<div id="modifyForm">
-						<form action="../modify" method="get">
-						<input type="hidden" name = "no" value = "${bContent.no }">
-							<!-- 작성자 -->
-							<div class="form-group">
-								<span class="form-text">작성자</span>
-								<span class="form-value">${bContent.name }</span>
-							</div>
-							
-							<!-- 조회수 -->
-							<div class="form-group">
-								<span class="form-text">조회수</span>
-								<span class="form-value">${bContent.hit }</span>
-							</div>
-							
-							<!-- 작성일 -->
-							<div class="form-group">
-								<span class="form-text">작성일</span>
-								<span class="form-value">${bContent.regDate }</span>
-							</div>
-							
+					<div id="writeForm">
+						<form action="../posting" method="get">
 							<!-- 제목 -->
 							<div class="form-group">
 								<label class="form-text" for="txt-title">제목</label>
-								<input type="text" id="txt-title" name="title" value="${bContent.title }">
+								<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
+								<input type="hidden" name = "userNo" value="${authUser.no}" >
 							</div>
-						
-							
 						
 							<!-- 내용 -->
 							<div class="form-group">
-								<textarea id="txt-content" name = "content">${bContent.content }</textarea>
+								<textarea id="txt-content" name = "content"></textarea>
 							</div>
 							
-							<a id="btn_cancel" href="./read/${bContent.no }">취소</a>
-							<button id="btn_modify" type="submit" >수정</button>
+							<a id="btn_cancel" href="">취소</a>
+							<button id="btn_add" type="submit" >등록</button>
 							
 						</form>
 						<!-- //form -->
 					</div>
-					<!-- //modifyForm -->
+					<!-- //writeForm -->
 				</div>
 				<!-- //board -->
 			</div>
 			<!-- //content  -->
+
 
 		</div>
 		<!-- //container  -->

@@ -54,12 +54,12 @@
 						<div class="clear"></div>
 						
 			
-					<ul id="viewArea" data-auth="${authUser.no}">
+					<ul id="viewArea">
 						
 						<!-- 이미지반복영역 -->
 						<c:forEach items="${gList}" var="gVo">
-							<li>
-								<div class="view" id = "t${gVo.no}" data-no="${gVo.no}" data-user = "${gVo.userNo}" data-save="${gVo.saveName }" data-content="${gVo.content }" >
+							<li id = "t${gVo.no}" >
+								<div class="view" data-no="${gVo.no}" data-auth="${authUser.no}" data-user = "${gVo.userNo}" data-save="${gVo.saveName }" data-content="${gVo.content }" >
 									<img class="imgItem" src="${pageContext.request.contextPath}/upload/${gVo.saveName}">
 									<div class="imgWriter">작성자: <strong>${gVo.userName}</strong></div>
 								</div>
@@ -174,12 +174,14 @@ $('#viewArea').on("click",".view", function(){
 	var user = $this.data("user");
 	var saveName= $this.data("save");
 	var content = $this.data("content");
-	var auth = $('#viewArea').data("auth");
+	var auth = $this.data("auth");
 	
 	var adr = "${pageContext.request.contextPath}/upload/" + saveName;
 	
 	if(user == auth){
-		$('.change').html('<button type="button" class="btn btn-danger" id="btnDel">삭제</button>');
+		$('.change').html('<button type="button" class="change btn btn-danger" id="btnDel">삭제</button>');
+	}else{
+		$('.change').html('<span class = "change"></span>');
 	}
 	
 	console.log("게시판제작유저 : " + user);
@@ -195,7 +197,7 @@ $('#viewArea').on("click",".view", function(){
 });
 
 /* 모달창 삭제버튼 클릭할 때 */
-$(".modal-footer").one("click", "#btnDel", function(){
+$(".modal-footer").on("click", "#btnDel", function(){
 	console.log("모달창 삭제버튼 클릭");
 	
 	// 데이터 모으기

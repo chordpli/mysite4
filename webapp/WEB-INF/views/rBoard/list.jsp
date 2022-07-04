@@ -63,16 +63,16 @@
 									<th>관리</th>
 								</tr>
 							</thead>
-							<c:forEach items="${bList }" var="bVo" >
+							<c:forEach items="${rList }" var="rVo" >
 								<tbody>
 									<tr>
-										<td>${bVo.no }</td>
-										<td class="text-left"><a href="./read/${bVo.no }">${bVo.title }</a></td>
-										<td>${bVo.name }</td>
-										<td>${bVo.hit }</td>
-										<td>${bVo.regDate }</td>
-										<c:if test="${ authUser.no eq bVo.userNo}">
-											<td><a href="./delete/${bVo.no}">[삭제]</a></td>
+										<td>${rVo.no }</td>
+										<td class="text-left"><a href="./read/${rVo.no }">${rVo.title }</a></td>
+										<td>${rVo.userName }</td>
+										<td>${rVo.hit }</td>
+										<td>${rVo.regDate }</td>
+										<c:if test="${ authUser.no eq rVo.userNo}">
+											<td><a href="./delete/${rVo.no}">[삭제]</a></td>
 										</c:if>
 									</tr>
 								</tbody>

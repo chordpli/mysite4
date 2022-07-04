@@ -11,5 +11,7 @@
         <mapper resource="mybatis/mappers/User.xml" />
         <mapper resource="mybatis/mappers/File.xml" />
         <mapper resource="mybatis/mappers/Gallery.xml" />
+        <mapper resource="mybatis/mappers/rBoard.xml" />
     </mappers>
+    
 </configuration>

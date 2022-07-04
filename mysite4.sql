@@ -132,3 +132,59 @@ create table board(
         ,constraint user_no_fk foreign key(user_no)
         references users(no)
 );
+
+-- rBoard table create
+create table rboard(
+    no number
+    ,user_no number not null
+    ,title varchar2(500)
+    ,content varchar2(4000)
+    ,hit number
+    ,reg_date date
+    ,group_no number
+    ,order_no number
+    ,depth number
+    ,primary key(no)
+    ,constraint rboard_user_no_fk foreign key(user_no)
+    references users(no)
+);
+
+create sequence seq_rboard_no
+increment by 1
+start with 1
+nocache;
+
+select r.no no
+        ,r.user_no userNo
+        ,r.title title
+        ,r.hit hit
+        ,to_char(r.reg_date, 'yyyy-mm-dd hh24:mi:ss') regDate
+        ,r.group_no groupNo
+        ,r.order_no orderNo
+        ,r.depth depth
+        ,u.name userName
+from rboard r, users u
+where u.no = r.no
+order by groupNo desc
+        , orderNo asc;
+
+select r.no no
+					,r.user_no userNo
+					,r.title title
+					,r.content content
+					,r.hit hit
+					,r.reg_date redDate
+					,r.group_no groupNo
+					,r.order_no orderNo
+					,r.depth depth
+					,u.name name
+			from rboard r, users u
+			where u.no = r.no;
+            
+            
+create sequence seq_rboard_group
+increment by 1
+start with 1
+nocache;
+
+drop table rboard;
