@@ -156,8 +156,43 @@
 
 <script type="text/javascript">
 	
+
+
+
+$('#btnImgUpload').on("click", function(){
+	console.log("이미지 등록 버튼 클릭");
+	$('#addModal').modal("show");
+});
+
+
+
+$('#viewArea').off('click').on("click",".view", function(){
+	console.log("이미지 클릭")
+	var $this = $(this)
+	var no= $this.data("no");
+	var user = $this.data("user");
+	var saveName= $this.data("save");
+	var content = $this.data("content");
+	var auth = $this.data("auth");
+	
+	var adr = "${pageContext.request.contextPath}/upload/" + saveName;
+	
+	if(user == auth){
+		$('.change').html('<button type="button" class="btn btn-danger" id="btnDel">삭제</button>');
+	}
+	
+	
+	$('#user').val(user);
+	$('#imgNo').val(no);
+	
+	$('#viewModelImg').attr('src', adr);
+	$('#viewModelContent').text(content);
+	$('#delUserNo').val(user);
+	$('#viewModal').modal("show");
+});
+
 /* 모달창 삭제버튼 클릭할 때 */
-$("#btnDel").one("click", function(){
+$("#btnDel").one("click", ".btn-danger", function(){
 	console.log("모달창 삭제버튼 클릭");
 	
 	// 데이터 모으기
@@ -197,39 +232,6 @@ $("#btnDel").one("click", function(){
 	
 	
 	
-});
-
-
-$('#btnImgUpload').on("click", function(){
-	console.log("이미지 등록 버튼 클릭");
-	$('#addModal').modal("show");
-});
-
-
-
-$('#viewArea').off('click').on("click",".view", function(){
-	console.log("이미지 클릭")
-	var $this = $(this)
-	var no= $this.data("no");
-	var user = $this.data("user");
-	var saveName= $this.data("save");
-	var content = $this.data("content");
-	var auth = $this.data("auth");
-	
-	var adr = "${pageContext.request.contextPath}/upload/" + saveName;
-	
-	if(user == auth){
-		$('.change').html('<button type="button" class="btn btn-danger" id="btnDel">삭제</button>');
-	}
-	
-	
-	$('#user').val(user);
-	$('#imgNo').val(no);
-	
-	$('#viewModelImg').attr('src', adr);
-	$('#viewModelContent').text(content);
-	$('#delUserNo').val(user);
-	$('#viewModal').modal("show");
 });
 
 </script>
