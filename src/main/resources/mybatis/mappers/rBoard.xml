@@ -28,7 +28,57 @@
 		<parameter property ="userName"/>
 	</parameterMap>
 	
-	<select id="rBoardList" resultType="com.javaex.vo.RBoardVo">
+	<select id="rBoardList" parameterType="map" resultType="com.javaex.vo.RBoardVo">
+		<![CDATA[
+			select ort.rn
+			        ,ort.no
+			        ,ort.userNo
+			        ,ort.title
+			        ,ort.hit
+			        ,ort.regDate
+			        ,ort.groupNo
+			        ,ort.orderNo
+			        ,ort.depth
+			        ,ort.userName
+			from (select rownum rn
+			            ,ot.no
+			            ,ot.userNo
+			            ,ot.title
+			            ,ot.hit
+			            ,ot.regDate
+			            ,ot.groupNo
+			            ,ot.orderNo
+			            ,ot.depth
+			            ,ot.userName
+			        from(   select r.no no
+			                        ,r.user_no userNo
+			                        ,r.title title
+			                        ,r.hit hit
+			                        ,to_char(r.reg_date, 'yyyy-mm-dd hh24:mi:ss') regDate
+			                        ,r.group_no groupNo
+			                        ,r.order_no orderNo
+			                        ,r.depth depth
+			                        ,u.name userName
+			                from rboard r, users u
+			                where u.no = r.user_no
+			                order by no desc) ot
+			        )ort
+			where rn>=#{startRNum}
+			and rn<=#{endRNum}
+		]]>
+	</select>
+	
+	<select id="selectTotalCnt" resultType="int">
+	
+		<![CDATA[
+			select count(*) count
+			from rboard r, users u
+			where r.user_no = u.no
+		]]>
+	
+	</select>
+	
+<!-- 	<select id="rBoardList" resultType="com.javaex.vo.RBoardVo">
 		<![CDATA[
 			select r.no no
 					,r.user_no userNo
@@ -45,9 +95,7 @@
 					,orderNo asc
 					
 		]]>
-	</select>
-	
-	
+	</select> -->	
 	<select id="rBoardRead" parameterType="int" resultType="com.javaex.vo.RBoardVo">
 		<![CDATA[
 			select r.no no
@@ -69,7 +117,8 @@
 	
 	<select id = "getStair" parameterType="int" resultType="com.javaex.vo.RBoardVo">
 		<![CDATA[
-			select group_no groupNo
+			select no
+					,group_no groupNo
 					,order_no orderNo
 					,depth depth
 			from rboard
@@ -87,8 +136,24 @@
 	<insert id="replyBoard" parameterMap="rpMap">
 		<![CDATA[
 			insert into rboard
-			values (seq_rboard_no.nextval, #{userNo}, #{title}, #{content}, 0, sysdate, #{groupNo}, #{orderNo}, #{depth})
+			values (seq_rboard_no.nextval, #{userNo}, #{title}, #{content}, 0, sysdate, #{groupNo}, #{orderNo}+1, #{depth}+1)
 		]]>
 	</insert>
+	
+	<update id="orderUpdate" parameterType="com.javaex.vo.RBoardVo">
+		<![CDATA[
+			update rboard
+			set order_no = #{orderNo} + 1
+			where group_no = #{groupNo}
+			and order_no > #{orderNo}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard" parameterType="int">
+		<![CDATA[
+			delete from rboard
+			where no = #{no}
+		]]>
+	</delete>
 
 </mapper>

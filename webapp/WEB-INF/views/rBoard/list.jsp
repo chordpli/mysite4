@@ -63,7 +63,7 @@
 									<th>관리</th>
 								</tr>
 							</thead>
-							<c:forEach items="${rList }" var="rVo" >
+							<c:forEach items="${rList.boardList }" var="rVo" >
 								<tbody>
 									<tr>
 										<td>${rVo.no }</td>
@@ -81,18 +81,26 @@
 			
 						<div id="paging">
 							<ul>
-								<li><a href="">◀</a></li>
-								<li><a href="">1</a></li>
-								<li><a href="">2</a></li>
-								<li><a href="">3</a></li>
-								<li><a href="">4</a></li>
-								<li class="active"><a href="">5</a></li>
-								<li><a href="">6</a></li>
-								<li><a href="">7</a></li>
-								<li><a href="">8</a></li>
-								<li><a href="">9</a></li>
-								<li><a href="">10</a></li>
+								<c:if test="${rList.prev}">
+									<li><a href="">◀</a></li>
+								</c:if>
+								
+								<c:forEach begin="${rList.startPageBtnNo}" end="${rList.endPageBtnNo}" step="1" var="page">
+									<c:choose>
+										<c:when test ="${param.crtPage == page }" >
+											<li class="active"><a href="./list?crtPage=${page}">${page }</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a href="./list?crtPage=${page}">${page }</a></li>
+										</c:otherwise>
+										
+									</c:choose>
+									
+								</c:forEach>
+								
+								<c:if test = "${rList.next}">
 								<li><a href="">▶</a></li>
+								</c:if>
 							</ul>
 							
 							

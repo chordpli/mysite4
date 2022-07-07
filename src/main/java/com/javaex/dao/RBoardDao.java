@@ -1,6 +1,8 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,21 @@ public class RBoardDao {
 	SqlSession sqlSession;
 	
 	// 리스트
-	public List<RBoardVo> rBoardList(){
+	public List<RBoardVo> rBoardList(int startRNum, int endRNum){
 		System.out.println("RBoardDao > rBoardList()");
-		return sqlSession.selectList("rBoard.rBoardList");
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		map.put("startRNum", startRNum);
+		map.put("endRNum", endRNum);
+		
+		return sqlSession.selectList("rBoard.rBoardList", map);
+	}
+	
+	// 전체 글 갯수
+	public int selectTotalCnt() {
+		System.out.println("RBoardDao > selectTotalCnt()");
+		return sqlSession.selectOne("rBoard.selectTotalCnt");
 	}
 	
 	// 글 읽기
@@ -38,14 +52,23 @@ public class RBoardDao {
 		return sqlSession.insert("rBoard.insertBoard", rVo);
 	}
 	
-	
 	// 답글 포스팅
 	public int replyBoard(RBoardVo rVo) {
 		System.out.println("RBoardDao > replyBoard()");
 		return sqlSession.insert("rBoard.replyBoard", rVo);
 	}
 	
+	// 답글시 orderNo 수정
+	public int orderUpdate(RBoardVo rVo) {
+		System.out.println("RBoardDao > orderUpdate()");
+		return sqlSession.update("rBoard.orderUpdate", rVo);
+	}
 	
-
+	// 게시글 삭제
+	public int deleteBoard(int no) {
+		System.out.println("RBoardDao > deleteBoard");
+		return sqlSession.delete("rBoard.deleteBoard", no);
+	}
+	
 	
 }

@@ -155,20 +155,6 @@ start with 1
 nocache;
 
 select r.no no
-        ,r.user_no userNo
-        ,r.title title
-        ,r.hit hit
-        ,to_char(r.reg_date, 'yyyy-mm-dd hh24:mi:ss') regDate
-        ,r.group_no groupNo
-        ,r.order_no orderNo
-        ,r.depth depth
-        ,u.name userName
-from rboard r, users u
-where u.no = r.no
-order by groupNo desc
-        , orderNo asc;
-
-select r.no no
 					,r.user_no userNo
 					,r.title title
 					,r.content content
@@ -179,7 +165,7 @@ select r.no no
 					,r.depth depth
 					,u.name name
 			from rboard r, users u
-			where u.no = r.no;
+			where u.no = r.user_no;
             
             
 create sequence seq_rboard_group
@@ -187,4 +173,47 @@ increment by 1
 start with 1
 nocache;
 
+drop sequence seq_rboard_group;
 drop table rboard;
+
+
+-- rownum
+			select ort.rn
+			        ,ort.no
+			        ,ort.userNo
+			        ,ort.title
+			        ,ort.hit
+			        ,ort.regDate
+			        ,ort.groupNo
+			        ,ort.orderNo
+			        ,ort.depth
+			        ,ort.userName
+			from (select rownum rn
+			            ,ot.no
+			            ,ot.userNo
+			            ,ot.title
+			            ,ot.hit
+			            ,ot.regDate
+			            ,ot.groupNo
+			            ,ot.orderNo
+			            ,ot.depth
+			            ,ot.userName
+			        from(   select r.no no
+			                        ,r.user_no userNo
+			                        ,r.title title
+			                        ,r.hit hit
+			                        ,to_char(r.reg_date, 'yyyy-mm-dd hh24:mi:ss') regDate
+			                        ,r.group_no groupNo
+			                        ,r.order_no orderNo
+			                        ,r.depth depth
+			                        ,u.name userName
+			                from rboard r, users u
+			                where u.no = r.user_no
+			                order by no desc) ot
+			        )ort
+			where rn>=1
+			and rn<=10;
+            
+select count(*) count
+from rboard r, users u
+where r.user_no = u.no;

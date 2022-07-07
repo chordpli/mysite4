@@ -246,7 +246,7 @@ $("#listArea").on("click", ".btnDel", function(){
 
 
 /* 모달창 삭제버튼 클릭할 때 */
-$("#btnModalDel").one("click", function(){
+$("#btnModalDel").on("click", function(){
 	console.log("모달창 삭제버튼 클릭");
 	
 	// 데이터 모으기

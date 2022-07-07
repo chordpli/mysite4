@@ -48,7 +48,8 @@
 	<!-- url매핑 -->
 	<mvc:resources mapping="/upload/**"
 		location="file:C:/javaStudy/upload/" />
-
+	
+	<!-- jackson -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean
@@ -61,4 +62,5 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	
 </beans>
